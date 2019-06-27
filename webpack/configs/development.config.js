@@ -1,5 +1,6 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const paths = require('../utils/paths');
+
 module.exports = env => ({
   devtool: 'cheap-eval-source-map',
   module: {
@@ -12,15 +13,19 @@ module.exports = env => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: '../src/index.html',
+      template: './index.html',
     }),
   ],
   devServer: {
-    contentBase: path.join(__dirname, '../dist'),
+    contentBase: paths.BUILD_DIR,
+    publicPath: '',
+    historyApiFallback: true,
     compress: true,
-    stats: 'errors-only',
+    port: 4040,
+    noInfo: true,
+    quiet: true,
     clientLogLevel: 'warning',
-    port: 2020,
+    stats: 'errors-only',
     open: true,
   },
 });

@@ -1,23 +1,21 @@
-const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const paths = require('../utils/paths');
 
 module.exports = env => ({
   mode: env.mode,
-  context: path.resolve(__dirname, '../src'),
-  entry: {
-    index: './index.js',
-  },
+  context: paths.SRC_DIR,
+  entry: './index.js',
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: paths.BUILD_DIR,
     filename: '[name].bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        include: paths.SRC_DIR,
         use: ['babel-loader'],
       },
       {
@@ -27,18 +25,32 @@ module.exports = env => ({
             loader: 'url-loader',
             options: {
               name: '[path]/[name].[ext]',
-              limit: 5000,
+              limit: 10000,
+            },
+          },
+          'img-loader',
+        ],
+      },
+      {
+        test: /\.woff(2)?(\?[a-z0-9#=&.]+)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[path]/[name].[ext]',
+              limit: 10000,
+              mimetype: 'application/font-woff',
             },
           },
         ],
       },
       {
-        test: /\.hbs$/,
-        use: 'handlebars-loader',
-      },
-      {
         test: /\.html$/,
         use: 'html-loader',
+      },
+      {
+        test: /\.hbs$/,
+        use: 'handlebars-loader',
       },
     ],
   },

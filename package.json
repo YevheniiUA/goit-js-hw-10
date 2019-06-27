@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --env.mode development",
-    "build": "webpack  --env.mode production",
+    "start": "webpack-dev-server --env.mode development  --config ./webpack/webpack.config.js",
+    "build": "webpack  --env.mode production  --config ./webpack/webpack.config.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -38,6 +38,7 @@
     "webpackbar": "^3.2.0"
   },
   "dependencies": {
+    "core-js": "^3.1.4",
     "handlebars": "^4.1.2"
   }
 }
